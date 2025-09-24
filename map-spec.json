@@ -1,0 +1,41 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Global Crocodile Observations by Country",
+  "width": 900,
+  "height": 500,
+  "projection": {"type": "equalEarth"},
+  "data": {
+    "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/3_choropleth_map/js/ne_110m_admin_0_countries.topojson",
+    "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
+  },
+  "transform": [
+    {
+      "lookup": "properties.NAME",
+      "from": {
+        "data": {
+          "url": "https://abs-j.github.io/crocodile-map/crocodile_dataset.csv",
+          "format": {"type": "csv"}
+        },
+        "key": "Country/Region",
+        "fields": ["Common Name"]
+      }
+    },
+    {
+      "aggregate": [{"op": "count", "field": "Common Name", "as": "obs_count"}],
+      "groupby": ["properties.NAME"]
+    }
+  ],
+  "mark": {"type": "geoshape", "stroke": "white"},
+  "encoding": {
+    "color": {
+      "field": "obs_count",
+      "type": "quantitative",
+      "scale": {"scheme": "greens"},
+      "legend": {"title": "Observations"}
+    },
+    "tooltip": [
+      {"field": "properties.NAME", "title": "Country"},
+      {"field": "obs_count", "title": "Observations"}
+    ]
+  }
+}
