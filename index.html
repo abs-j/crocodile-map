@@ -1,17 +1,171 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Crocodile Map</title>
-  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crocodile Species Distribution Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2c5f2d 0%, #1a3a1b 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .pure-g {
+            margin-bottom: 2rem;
+        }
+
+        .viz-section {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .viz-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2c5f2d;
+            border-bottom: 3px solid #2c5f2d;
+            padding-bottom: 0.5rem;
+        }
+
+        .viz-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .map-container {
+            width: 100%;
+            min-height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chart-container {
+            width: 100%;
+            min-height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .pure-u-md-1-2 {
+                width: 50%;
+            }
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+    </style>
 </head>
 <body>
-  <h2>Crocodile Observations Map</h2>
-  <div id="vis"></div>
-  <script>
-    vegaEmbed("#vis", "map-spec.json", {actions: false});
-  </script>
+    <header>
+        <h1>🐊 Crocodile Species Distribution Dashboard</h1>
+        <p>Global observations and conservation status analysis</p>
+    </header>
+
+    <div class="container">
+        <!-- Geographic Map Section -->
+        <div class="viz-section">
+            <h2>Geographic Distribution of Crocodile Observations</h2>
+            <div id="map" class="map-container">
+                <div class="loading">Loading map...</div>
+            </div>
+        </div>
+
+        <!-- Additional sections for future visualizations -->
+        <div class="viz-section">
+            <h2>Conservation Status Overview</h2>
+            <div id="conservation" class="chart-container">
+                <div class="loading">Loading chart...</div>
+            </div>
+        </div>
+
+        <div class="viz-section">
+            <h2>Species by Country</h2>
+            <div id="species-country" class="chart-container">
+                <div class="loading">Loading chart...</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Crocodile Dataset Dashboard | Data Visualization with Vega-Lite</p>
+    </footer>
+
+    <script>
+        // Load all visualizations
+        async function loadVisualizations() {
+            try {
+                // Load geographic map
+                const mapSpec = await fetch('specs/map.json').then(r => r.json());
+                await vegaEmbed('#map', mapSpec, {actions: true});
+
+                // Load conservation status chart
+                const conservationSpec = await fetch('specs/conservation.json').then(r => r.json());
+                await vegaEmbed('#conservation', conservationSpec, {actions: true});
+
+                // Load species by country chart
+                const speciesCountrySpec = await fetch('specs/species-country.json').then(r => r.json());
+                await vegaEmbed('#species-country', speciesCountrySpec, {actions: true});
+            } catch (error) {
+                console.error('Error loading visualizations:', error);
+                document.body.innerHTML += '<p style="color: red; padding: 2rem;">Error loading visualizations. Please ensure all JSON files are in the specs folder.</p>';
+            }
+        }
+
+        // Load visualizations when page is ready
+        document.addEventListener('DOMContentLoaded', loadVisualizations);
+    </script>
 </body>
 </html>

@@ -1,0 +1,90 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 400,
+  "title": "Crocodile Species Observations by Country",
+  "data": {
+    "url": "crocodile_dataset.csv"
+  },
+  "transform": [
+    {
+      "aggregate": [
+        {
+          "op": "count",
+          "as": "observation_count"
+        }
+      ],
+      "groupby": ["Country/Region", "Common Name"]
+    },
+    {
+      "sort": [
+        {
+          "field": "observation_count",
+          "order": "descending"
+        }
+      ]
+    },
+    {
+      "window": [
+        {
+          "op": "row_number",
+          "as": "rank"
+        }
+      ],
+      "sort": [
+        {
+          "field": "observation_count",
+          "order": "descending"
+        }
+      ]
+    },
+    {
+      "filter": "datum.rank <= 15"
+    }
+  ],
+  "mark": {
+    "type": "bar",
+    "cornerRadius": 4
+  },
+  "encoding": {
+    "y": {
+      "field": "Country/Region",
+      "type": "nominal",
+      "title": "Country/Region",
+      "sort": {
+        "field": "observation_count",
+        "order": "descending"
+      }
+    },
+    "x": {
+      "field": "observation_count",
+      "type": "quantitative",
+      "title": "Number of Observations"
+    },
+    "color": {
+      "field": "Common Name",
+      "type": "nominal",
+      "scale": {
+        "scheme": "category10"
+      },
+      "title": "Species"
+    },
+    "tooltip": [
+      {
+        "field": "Country/Region",
+        "type": "nominal",
+        "title": "Country/Region"
+      },
+      {
+        "field": "Common Name",
+        "type": "nominal",
+        "title": "Species"
+      },
+      {
+        "field": "observation_count",
+        "type": "quantitative",
+        "title": "Observations"
+      }
+    ]
+  }
+}

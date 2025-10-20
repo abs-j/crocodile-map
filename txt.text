@@ -1,0 +1,107 @@
+
+---
+
+## specs/bars_species_by_habitat.json
+
+```json
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 520,
+  "height": 360,
+  "data": { "url": "crocodile_dataset.csv" },
+  "params": [
+    { "name": "bSex", "bind": { "input": "select", "name": "Sex: ", "options": [null, "Male", "Female", "Unknown"] } },
+    { "name": "bYearMin", "value": 1980, "bind": { "input": "range", "name": "From Year: ", "min": 1980, "max": 2025, "step": 1 } },
+    { "name": "bYearMax", "value": 2025, "bind": { "input": "range", "name": "To Year: ", "min": 1980, "max": 2025, "step": 1 } }
+  ],
+  "transform": [
+    { "calculate": "year(toDate(datum['Date of Observation']))", "as": "Year" },
+    { "filter": "datum.Year >= bYearMin && datum.Year <= bYearMax" },
+    { "filter": "!bSex || datum['Sex']==bSex" }
+  ],
+  "mark": { "type": "bar" },
+  "encoding": {
+    "x": { "field": "Habitat Type", "type": "nominal", "title": "Habitat" },
+    "y": { "aggregate": "count", "type": "quantitative", "title": "Observations" },
+    "color": { "field": "Common Name", "type": "nominal", "title": "Species" },
+    "tooltip": [
+      { "field": "Habitat Type", "title": "Habitat" },
+      { "aggregate": "count", "title": "Observations" }
+    ]
+  }
+}
+```
+
+---
+
+## specs/timeline_observations.json
+
+```json
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 660,
+  "height": 360,
+  "data": { "url": "crocodile_dataset.csv" },
+  "params": [
+    { "name": "tSpecies", "bind": { "input": "select", "name": "Species: ", "options": [null, "Saltwater Crocodile", "Nile Crocodile", "American Crocodile", "Mugger Crocodile"] } },
+    { "name": "tRegion", "bind": { "input": "text", "name": "Country contains: " } }
+  ],
+  "transform": [
+    { "filter": "!tSpecies || datum['Common Name']==tSpecies" },
+    { "filter": "!tRegion || indexof(lower(datum['Country/Region']), lower(tRegion)) >= 0" }
+  ],
+  "mark": { "type": "area", "line": true, "opacity": 0.5 },
+  "encoding": {
+    "x": {
+      "timeUnit": "yearmonth",
+      "field": "Date of Observation",
+      "title": "Observation month"
+    },
+    "y": { "aggregate": "count", "title": "Observations" },
+    "color": { "field": "Common Name", "type": "nominal", "legend": { "orient": "bottom" } },
+    "tooltip": [
+      { "timeUnit": "yearmonth", "field": "Date of Observation", "title": "Month" },
+      { "aggregate": "count", "title": "Observations" }
+    ]
+  }
+}
+```
+
+---
+
+## README.md
+
+```md
+# Crocodile Dashboard (Vega‑Lite)
+
+Public web page for Data Visualisation 2. Deployed via GitHub Pages.
+
+## Run locally
+
+Open `index.html` directly. (If the browser blocks local CSV fetches, use a tiny HTTP server like `python -m http.server` and visit http://localhost:8000/.)
+
+## Data size & performance
+- Keep `crocodile_dataset.csv` small (<250 KB) to ensure total downloads across four charts remain under 1 MB.
+- If your CSV is larger, create pre‑aggregated CSVs per chart (e.g., `country_counts.csv`).
+
+## Design method documentation
+- **What/Why/How** is summarised in the page’s Design Notes section.
+- **Five Design Sheets (FDS):** Include scans/photos/PDF in a `/design/` folder, or append a section in this README with your five sketches and commentary.
+
+## Accessibility
+- Tooltip text uses plain units (m, kg).
+- Color encodings always have position or labels, and legends are placed at bottom for readability.
+
+## License
+- Vega/Vega‑Lite/vega‑embed via CDN.
+- World TopoJSON via vega‑datasets.
+```
+
+---
+
+### Notes & Tips
+
+* **Country names:** If your `Country/Region` does not match map IDs, replace the map spec’s data with a TopoJSON that includes `properties.name` and do a `lookup` on the name. Or compute `country_counts.csv` beforehand.
+* **Field names with spaces:** Vega‑Lite supports them as long as you reference fields exactly (e.g., `"Observed Length (m)"`).
+* **Single CSV, multiple charts:** Each spec fetches the CSV. If you must strictly limit to one fetch, you can embed data inline or use a shared dataset via custom embedding code; not necessary if your CSV is small.
+* **Storytelling flow:** Land (map) → Body (scatter) → Habitat (bars) → Time (timeline). Keep the narrative in your report.
