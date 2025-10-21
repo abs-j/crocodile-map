@@ -1,0 +1,103 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": "container",
+  "title": "Crocodile Species by Conservation Status and Size",
+  "data": {
+    "url": "crocodile_species_info.csv"
+  },
+  "transform": [
+    {
+      "calculate": "datum['Max Length (m)'] * 100",
+      "as": "length_cm"
+    }
+  ],
+  "mark": {
+    "type": "circle",
+    "opacity": 0.8,
+    "stroke": "white",
+    "strokeWidth": 1
+  },
+  "encoding": {
+    "x": {
+      "field": "Max Length (m)",
+      "type": "quantitative",
+      "title": "Maximum Length (meters)",
+      "scale": {
+        "zero": false
+      }
+    },
+    "y": {
+      "field": "Max Weight (kg)",
+      "type": "quantitative",
+      "title": "Maximum Weight (kg)",
+      "scale": {
+        "zero": false
+      }
+    },
+    "size": {
+      "field": "Max Length (m)",
+      "type": "quantitative",
+      "scale": {
+        "range": [50, 300]
+      },
+      "title": "Size (Length)"
+    },
+    "color": {
+      "field": "Conservation Status",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Least Concern",
+          "Vulnerable",
+          "Critically Endangered",
+          "Data Deficient"
+        ],
+        "range": [
+          "#2c5f2d",
+          "#f0ad4e",
+          "#d9534f",
+          "#5bc0de"
+        ]
+      },
+      "title": "Conservation Status"
+    },
+    "tooltip": [
+      {
+        "field": "Species",
+        "type": "nominal",
+        "title": "Species"
+      },
+      {
+        "field": "Scientific Name",
+        "type": "nominal",
+        "title": "Scientific Name"
+      },
+      {
+        "field": "Max Length (m)",
+        "type": "quantitative",
+        "title": "Max Length (m)"
+      },
+      {
+        "field": "Max Weight (kg)",
+        "type": "quantitative",
+        "title": "Max Weight (kg)"
+      },
+      {
+        "field": "Conservation Status",
+        "type": "nominal",
+        "title": "Conservation Status"
+      },
+      {
+        "field": "Geographic Range",
+        "type": "nominal",
+        "title": "Geographic Range"
+      },
+      {
+        "field": "Habitat Preferences",
+        "type": "nominal",
+        "title": "Habitat"
+      }
+    ]
+  }
+}

@@ -1,0 +1,225 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": "container",
+  "title": "Advanced Crocodilian Analysis: Size, Conservation & Habitat Relationships",
+  "data": {
+    "url": "crocodile_species_info.csv"
+  },
+  "transform": [
+    {
+      "calculate": "datum['Max Length (m)'] * datum['Max Weight (kg)']",
+      "as": "size_index"
+    },
+    {
+      "calculate": "if(datum['Conservation Status'] == 'Critically Endangered', 4, if(datum['Conservation Status'] == 'Endangered', 3, if(datum['Conservation Status'] == 'Vulnerable', 2, 1)))",
+      "as": "threat_level"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "circle",
+        "opacity": 0.7,
+        "stroke": "white",
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "x": {
+          "field": "Max Length (m)",
+          "type": "quantitative",
+          "title": "Maximum Length (meters)",
+          "scale": {
+            "zero": false,
+            "nice": true
+          }
+        },
+        "y": {
+          "field": "Max Weight (kg)",
+          "type": "quantitative",
+          "title": "Maximum Weight (kg)",
+          "scale": {
+            "zero": false,
+            "nice": true
+          }
+        },
+        "size": {
+          "field": "size_index",
+          "type": "quantitative",
+          "scale": {
+            "range": [100, 800],
+            "type": "log"
+          },
+          "title": "Size Index (L×W)"
+        },
+        "color": {
+          "field": "Conservation Status",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Least Concern",
+              "Vulnerable", 
+              "Endangered",
+              "Critically Endangered",
+              "Data Deficient"
+            ],
+            "range": [
+              "#2c5f2d",
+              "#f0ad4e",
+              "#ff8c00",
+              "#d9534f",
+              "#5bc0de"
+            ]
+          },
+          "title": "Conservation Status"
+        },
+        "stroke": {
+          "field": "Family",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Crocodylidae", "Alligatoridae", "Gavialidae"],
+            "range": ["#000000", "#8B4513", "#4169E1"]
+          },
+          "title": "Family"
+        },
+        "strokeWidth": {
+          "value": 2
+        },
+        "tooltip": [
+          {
+            "field": "Species",
+            "type": "nominal",
+            "title": "Species"
+          },
+          {
+            "field": "Scientific Name",
+            "type": "nominal",
+            "title": "Scientific Name"
+          },
+          {
+            "field": "Family",
+            "type": "nominal",
+            "title": "Family"
+          },
+          {
+            "field": "Max Length (m)",
+            "type": "quantitative",
+            "title": "Max Length (m)"
+          },
+          {
+            "field": "Max Weight (kg)",
+            "type": "quantitative",
+            "title": "Max Weight (kg)"
+          },
+          {
+            "field": "Conservation Status",
+            "type": "nominal",
+            "title": "Conservation Status"
+          },
+          {
+            "field": "Geographic Range",
+            "type": "nominal",
+            "title": "Geographic Range"
+          },
+          {
+            "field": "Habitat Preferences",
+            "type": "nominal",
+            "title": "Habitat"
+          },
+          {
+            "field": "size_index",
+            "type": "quantitative",
+            "title": "Size Index"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "stroke": "#ff6b6b",
+        "strokeWidth": 2,
+        "strokeDash": [5, 5]
+      },
+      "encoding": {
+        "x": {
+          "datum": 3.0
+        },
+        "y": {
+          "datum": 0
+        },
+        "y2": {
+          "datum": 1000
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "stroke": "#4ecdc4",
+        "strokeWidth": 2,
+        "strokeDash": [5, 5]
+      },
+      "encoding": {
+        "x": {
+          "datum": 0
+        },
+        "x2": {
+          "datum": 7.0
+        },
+        "y": {
+          "datum": 500
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 5,
+        "dy": -5,
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "fill": "#ff6b6b"
+      },
+      "encoding": {
+        "x": {
+          "datum": 3.0
+        },
+        "y": {
+          "datum": 50
+        },
+        "text": {
+          "datum": "Large Species Threshold"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 5,
+        "dy": 5,
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "fill": "#4ecdc4"
+      },
+      "encoding": {
+        "x": {
+          "datum": 0.5
+        },
+        "y": {
+          "datum": 500
+        },
+        "text": {
+          "datum": "Heavy Species Threshold"
+        }
+      }
+    }
+  ],
+  "resolve": {
+    "scale": {
+      "color": "independent"
+    }
+  }
+}

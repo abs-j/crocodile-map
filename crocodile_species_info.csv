@@ -1,0 +1,27 @@
+Species,Scientific Name,Family,Genus,Max Length (m),Max Weight (kg),Conservation Status,Geographic Range,Habitat Preferences,Size Category
+Saltwater Crocodile,Crocodylus porosus,Crocodylidae,Crocodylus,7.0,1000,Least Concern,South Asia to Australia,Estuaries and coastal waters,Large
+Nile Crocodile,Crocodylus niloticus,Crocodylidae,Crocodylus,6.0,750,Least Concern,Sub-Saharan Africa,Freshwater rivers and lakes,Large
+American Crocodile,Crocodylus acutus,Crocodylidae,Crocodylus,5.0,500,Vulnerable,Central and South America,Coastal and freshwater,Large
+Mugger Crocodile,Crocodylus palustris,Crocodylidae,Crocodylus,4.5,450,Vulnerable,Indian subcontinent,Freshwater rivers and lakes,Medium-Large
+Morelet's Crocodile,Crocodylus moreletii,Crocodylidae,Crocodylus,4.0,400,Least Concern,Central America,Freshwater swamps and rivers,Medium-Large
+Orinoco Crocodile,Crocodylus intermedius,Crocodylidae,Crocodylus,6.0,600,Critically Endangered,South America,Large rivers,Critically Endangered
+Siamese Crocodile,Crocodylus siamensis,Crocodylidae,Crocodylus,4.0,350,Critically Endangered,Southeast Asia,Freshwater rivers and swamps,Critically Endangered
+Cuban Crocodile,Crocodylus rhombifer,Crocodylidae,Crocodylus,3.5,300,Critically Endangered,Cuba,Freshwater swamps,Critically Endangered
+Philippine Crocodile,Crocodylus mindorensis,Crocodylidae,Crocodylus,3.0,200,Critically Endangered,Philippines,Freshwater rivers,Critically Endangered
+New Guinea Crocodile,Crocodylus novaeguineae,Crocodylidae,Crocodylus,3.5,300,Least Concern,New Guinea,Freshwater rivers and swamps,Medium
+Freshwater Crocodile,Crocodylus johnstoni,Crocodylidae,Crocodylus,3.0,100,Least Concern,Northern Australia,Freshwater rivers and billabongs,Medium
+West African Crocodile,Crocodylus suchus,Crocodylidae,Crocodylus,3.0,250,Least Concern,West and Central Africa,Freshwater rivers and lakes,Medium
+West African Dwarf Crocodile,Osteolaemus tetraspis,Crocodylidae,Osteolaemus,1.5,50,Vulnerable,West and Central Africa,Forest streams and swamps,Small
+Congo Dwarf Crocodile,Osteolaemus osborni,Crocodylidae,Osteolaemus,1.2,40,Data Deficient,Central Africa,Forest swamps,Small
+West African Slender-snouted Crocodile,Mecistops cataphractus,Crocodylidae,Mecistops,4.0,350,Critically Endangered,West and Central Africa,Forest rivers,Critically Endangered
+Central African Slender-snouted Crocodile,Mecistops leptorhynchus,Crocodylidae,Mecistops,4.0,350,Critically Endangered,Central Africa,Forest rivers,Critically Endangered
+Chinese Alligator,Alligator sinensis,Alligatoridae,Alligator,2.0,45,Critically Endangered,China,Freshwater rivers and lakes,Critically Endangered
+American Alligator,Alligator mississippiensis,Alligatoridae,Alligator,4.5,450,Least Concern,Southeastern United States,Freshwater swamps and rivers,Large
+Broad-snouted Caiman,Caiman latirostris,Alligatoridae,Caiman,3.0,200,Least Concern,South America,Freshwater rivers and swamps,Medium
+Spectacled Caiman,Caiman crocodilus,Alligatoridae,Caiman,2.5,150,Least Concern,Central and South America,Freshwater rivers and swamps,Medium
+Black Caiman,Melanosuchus niger,Alligatoridae,Melanosuchus,5.0,500,Least Concern,South America,Freshwater rivers and lakes,Large
+Yacare Caiman,Caiman yacare,Alligatoridae,Caiman,2.5,150,Least Concern,South America,Freshwater rivers and swamps,Medium
+Dwarf Caiman,Paleosuchus palpebrosus,Alligatoridae,Paleosuchus,1.5,20,Least Concern,South America,Forest streams,Small
+Smooth-fronted Caiman,Paleosuchus trigonatus,Alligatoridae,Paleosuchus,2.0,30,Least Concern,South America,Forest streams,Small
+Gharial,Gavialis gangeticus,Gavialidae,Gavialis,6.0,250,Critically Endangered,Indian subcontinent,Large rivers,Critically Endangered
+False Gharial,Tomistoma schlegelii,Gavialidae,Tomistoma,5.0,200,Vulnerable,Southeast Asia,Freshwater rivers and swamps,Vulnerable

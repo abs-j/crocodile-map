@@ -53,7 +53,8 @@
             border-radius: 8px;
             padding: 1.5rem;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
+            overflow: hidden;
         }
 
         .viz-section h2 {
@@ -72,7 +73,9 @@
 
         .map-container {
             width: 100%;
-            min-height: 600px;
+            height: 60vh;
+            min-height: 500px;
+            max-height: 800px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -80,7 +83,19 @@
 
         .chart-container {
             width: 100%;
+            height: 50vh;
+            min-height: 350px;
+            max-height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .large-chart-container {
+            width: 100%;
+            height: 60vh;
             min-height: 400px;
+            max-height: 700px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -89,6 +104,52 @@
         @media (min-width: 768px) {
             .pure-u-md-1-2 {
                 width: 50%;
+            }
+            
+            .chart-container {
+                height: 45vh;
+                min-height: 300px;
+                max-height: 500px;
+            }
+            
+            .large-chart-container {
+                height: 55vh;
+                min-height: 350px;
+                max-height: 600px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .chart-container {
+                height: 40vh;
+                min-height: 280px;
+                max-height: 450px;
+            }
+            
+            .large-chart-container {
+                height: 50vh;
+                min-height: 320px;
+                max-height: 550px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .chart-container {
+                height: 45vh;
+                min-height: 300px;
+                max-height: 400px;
+            }
+            
+            .large-chart-container {
+                height: 50vh;
+                min-height: 350px;
+                max-height: 500px;
+            }
+            
+            .map-container {
+                height: 50vh;
+                min-height: 400px;
+                max-height: 600px;
             }
         }
 
@@ -106,6 +167,7 @@
             padding: 2rem;
             color: #666;
         }
+
     </style>
 </head>
 <body>
@@ -115,26 +177,345 @@
     </header>
 
     <div class="container">
+        <!-- Introduction Section -->
+        <div class="viz-section">
+            <h2>🐊 Global Crocodile Species – Diversity, Size, and Conservation</h2>
+            <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1rem;">
+                Crocodiles are among the most iconic apex predators, yet many species are threatened by habitat loss, hunting, and climate change. 
+                This comprehensive dashboard explores the global distribution, physical characteristics, and conservation status of crocodilian species worldwide.
+            </p>
+            <p style="font-size: 1rem; line-height: 1.6; color: #666;">
+                This analysis combines <strong>two complementary datasets</strong>: field observations from around the world showing real crocodile encounters, 
+                and comprehensive species information including maximum sizes, conservation status, and geographic ranges. 
+                Together, they provide both the "what we see" (observations) and the "what we know" (species characteristics) of crocodilian biodiversity.
+            </p>
+            
+            <!-- Key Statistics -->
+            <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem; border-left: 4px solid #2c5f2d;">
+                <h3 style="color: #2c5f2d; margin-bottom: 1rem; font-size: 1.2rem;">📊 Dual Dataset Overview</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: #2c5f2d;">1,000+</div>
+                        <div style="font-size: 0.9rem; color: #666;">Field Observations</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: #2c5f2d;">26</div>
+                        <div style="font-size: 0.9rem; color: #666;">Species Profiles</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: #2c5f2d;">3</div>
+                        <div style="font-size: 0.9rem; color: #666;">Crocodilian Families</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: #2c5f2d;">50+</div>
+                        <div style="font-size: 0.9rem; color: #666;">Countries & Regions</div>
+                    </div>
+                </div>
+                <div style="margin-top: 1rem; padding: 1rem; background: rgba(44, 95, 45, 0.1); border-radius: 6px; font-size: 0.9rem; color: #555;">
+                    <strong>📋 Dataset Sources:</strong><br>
+                    • <strong>Field Observations:</strong> Real-world crocodile encounters with size, location, and habitat data<br>
+                    • <strong>Species Information:</strong> Comprehensive species profiles with maximum sizes, conservation status, and geographic ranges
+                </div>
+            </div>
+        </div>
+
+
         <!-- Geographic Map Section -->
         <div class="viz-section">
-            <h2>Geographic Distribution of Crocodile Observations</h2>
+            <h2>🌍 Geographic Distribution of Crocodile Observations</h2>
+            <p style="margin-bottom: 1rem; color: #666;">
+                This map reveals the global footprint of crocodilian species, showing where these ancient predators still thrive today. 
+                The logarithmic color scale highlights both major biodiversity hotspots and regions with sparse populations, 
+                telling a story of survival, adaptation, and conservation challenges across different continents.
+            </p>
+            <div style="background: #f8f9fa; padding: 1rem; border-radius: 6px; margin-bottom: 1rem; border-left: 3px solid #2c5f2d;">
+                <strong>🗺️ Key Geographic Patterns:</strong>
+                <ul style="margin: 0.5rem 0; padding-left: 1.5rem; color: #555;">
+                    <li><strong>Tropical Hotspots:</strong> Southeast Asia, Central America, and northern Australia show the highest observation densities</li>
+                    <li><strong>African Strongholds:</strong> West and Central Africa maintain significant crocodile populations</li>
+                    <li><strong>Conservation Gaps:</strong> Some regions show low observation counts, potentially indicating understudied areas or population declines</li>
+                </ul>
+            </div>
             <div id="map" class="map-container">
                 <div class="loading">Loading map...</div>
             </div>
         </div>
 
-        <!-- Additional sections for future visualizations -->
+        <!-- Physical Characteristics Section -->
         <div class="viz-section">
-            <h2>Conservation Status Overview</h2>
-            <div id="conservation" class="chart-container">
+            <h2>📏⚖️ Physical Characteristics: Length vs Weight</h2>
+            <p style="margin-bottom: 1rem; color: #666;">
+                This scatter plot reveals the fundamental growth patterns of crocodiles, showing how these apex predators develop from tiny hatchlings 
+                to massive adults. Each point tells a story of survival, with habitat type influencing growth patterns and age class determining size. 
+                The visualization uncovers fascinating insights about crocodile biology and ecology.
+            </p>
+            <div style="background: #f8f9fa; padding: 1rem; border-radius: 6px; margin-bottom: 1rem; border-left: 3px solid #2c5f2d;">
+                <strong>🔬 Biological Insights:</strong>
+                <ul style="margin: 0.5rem 0; padding-left: 1.5rem; color: #555;">
+                    <li><strong>Growth Curves:</strong> The strong positive correlation shows crocodiles follow predictable growth patterns</li>
+                    <li><strong>Habitat Influence:</strong> Different environments may support different growth rates and maximum sizes</li>
+                    <li><strong>Age Structure:</strong> Point sizes reveal the demographic composition of observed populations</li>
+                    <li><strong>Outliers:</strong> Unusual data points may indicate measurement errors or exceptional individuals</li>
+                </ul>
+            </div>
+            <div id="length-weight" class="large-chart-container">
                 <div class="loading">Loading chart...</div>
             </div>
         </div>
 
+        <!-- Advanced Species Analysis -->
         <div class="viz-section">
-            <h2>Species by Country</h2>
-            <div id="species-country" class="chart-container">
+            <h2>🔬 Advanced Multi-Dimensional Species Analysis</h2>
+            <p style="margin-bottom: 1rem; color: #666;">
+                This sophisticated visualization combines multiple data dimensions to reveal complex patterns in crocodilian biology and conservation. 
+                Each point represents a species with size, conservation status, family relationships, and ecological characteristics all encoded simultaneously.
+            </p>
+            <div style="background: #f8f9fa; padding: 1rem; border-radius: 6px; margin-bottom: 1rem; border-left: 3px solid #2c5f2d;">
+                <strong>🧬 Advanced Analytics Features:</strong>
+                <ul style="margin: 0.5rem 0; padding-left: 1.5rem; color: #555;">
+                    <li><strong>Size Index:</strong> Bubble size represents length × weight (logarithmic scale)</li>
+                    <li><strong>Family Encoding:</strong> Stroke color indicates evolutionary family (Crocodylidae, Alligatoridae, Gavialidae)</li>
+                    <li><strong>Conservation Status:</strong> Fill color shows IUCN threat level</li>
+                    <li><strong>Reference Lines:</strong> Threshold lines identify "large" and "heavy" species categories</li>
+                    <li><strong>Multi-dimensional Tooltips:</strong> Hover for comprehensive species information</li>
+                </ul>
+            </div>
+            <div id="advanced-species-analysis" class="large-chart-container">
                 <div class="loading">Loading chart...</div>
+            </div>
+        </div>
+
+        <!-- Habitat and Demographics Section -->
+        <div class="pure-g">
+            <div class="pure-u-1 pure-u-md-1-2">
+                <div class="viz-section">
+                    <h2>🏞️ Habitat Distribution</h2>
+                    <p style="margin-bottom: 1rem; color: #666; font-size: 0.9rem;">
+                        This chart reveals the ecological preferences of crocodilian species, showing which environments they favor for survival. 
+                        From freshwater rivers to coastal estuaries, each habitat type tells a story of adaptation and ecological niche specialization.
+                    </p>
+                    <div style="background: #f8f9fa; padding: 0.8rem; border-radius: 6px; margin-bottom: 1rem; border-left: 3px solid #2c5f2d; font-size: 0.8rem;">
+                        <strong>🌿 Habitat Insights:</strong>
+                        <ul style="margin: 0.3rem 0; padding-left: 1.2rem; color: #555;">
+                            <li>Rivers dominate as primary habitat</li>
+                            <li>Swamps provide critical breeding grounds</li>
+                            <li>Coastal areas show high diversity</li>
+                        </ul>
+                    </div>
+                    <div id="habitat-distribution" class="chart-container">
+                        <div class="loading">Loading chart...</div>
+                    </div>
+                </div>
+            </div>
+            <div class="pure-u-1 pure-u-md-1-2">
+                <div class="viz-section">
+                    <h2>👶🧑‍🦰 Age and Sex Distribution</h2>
+                    <p style="margin-bottom: 1rem; color: #666; font-size: 0.9rem;">
+                        This demographic breakdown reveals the population structure of crocodilian species, showing age composition and sex ratios. 
+                        Understanding these patterns is crucial for conservation planning and population health assessment.
+                    </p>
+                    <div style="background: #f8f9fa; padding: 0.8rem; border-radius: 6px; margin-bottom: 1rem; border-left: 3px solid #2c5f2d; font-size: 0.8rem;">
+                        <strong>📊 Demographic Insights:</strong>
+                        <ul style="margin: 0.3rem 0; padding-left: 1.2rem; color: #555;">
+                            <li>Adult dominance suggests stable populations</li>
+                            <li>Sex ratios indicate reproductive health</li>
+                            <li>Age structure reveals recruitment success</li>
+                        </ul>
+                    </div>
+                    <div id="age-sex-distribution" class="chart-container">
+                        <div class="loading">Loading chart...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conservation Analysis Section -->
+        <div class="pure-g">
+            <div class="pure-u-1 pure-u-md-1-2">
+                <div class="viz-section">
+                    <h2>🚨 Conservation Status Overview</h2>
+                    <p style="margin-bottom: 1rem; color: #666; font-size: 0.9rem;">
+                        This critical analysis reveals the conservation challenges facing crocodilian species worldwide. 
+                        The distribution across IUCN categories tells a story of both hope and urgency, with many species requiring immediate protection.
+                    </p>
+                    <div style="background: #f8f9fa; padding: 0.8rem; border-radius: 6px; margin-bottom: 1rem; border-left: 3px solid #d9534f; font-size: 0.8rem;">
+                        <strong>⚠️ Conservation Alerts:</strong>
+                        <ul style="margin: 0.3rem 0; padding-left: 1.2rem; color: #555;">
+                            <li>High proportion of threatened species</li>
+                            <li>Critically endangered species need urgent action</li>
+                            <li>Data deficient species require more research</li>
+                        </ul>
+                    </div>
+                    <div id="conservation" class="chart-container">
+                        <div class="loading">Loading chart...</div>
+                    </div>
+                </div>
+            </div>
+            <div class="pure-u-1 pure-u-md-1-2">
+                <div class="viz-section">
+                    <h2>🌏 Species by Country</h2>
+                    <p style="margin-bottom: 1rem; color: #666; font-size: 0.9rem;">
+                        This geographic analysis shows which countries harbor the greatest crocodilian biodiversity, 
+                        identifying key regions for international conservation efforts and highlighting the global nature of crocodile conservation.
+                    </p>
+                    <div style="background: #f8f9fa; padding: 0.8rem; border-radius: 6px; margin-bottom: 1rem; border-left: 3px solid #2c5f2d; font-size: 0.8rem;">
+                        <strong>🌍 Geographic Insights:</strong>
+                        <ul style="margin: 0.3rem 0; padding-left: 1.2rem; color: #555;">
+                            <li>Tropical regions show highest diversity</li>
+                            <li>Some countries are biodiversity hotspots</li>
+                            <li>International cooperation is essential</li>
+                        </ul>
+                    </div>
+                    <div id="species-country" class="chart-container">
+                        <div class="loading">Loading chart...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Species Information Section -->
+        <div class="viz-section">
+            <h2>🧬 Species Information: What We Know About Each Species</h2>
+            <p style="margin-bottom: 1rem; color: #666;">
+                While the field observations show us what crocodiles we encounter in the wild, this dataset provides the complete picture 
+                of each species' characteristics, maximum potential sizes, and conservation status. This "species knowledge" dataset 
+                complements our field data by showing the full range of what each species can achieve.
+            </p>
+            <div style="background: #f8f9fa; padding: 1rem; border-radius: 6px; margin-bottom: 1rem; border-left: 3px solid #2c5f2d;">
+                <strong>🧬 Species Dataset Insights:</strong>
+                <ul style="margin: 0.5rem 0; padding-left: 1.5rem; color: #555;">
+                    <li><strong>Maximum Potential:</strong> Shows the largest recorded sizes for each species</li>
+                    <li><strong>Conservation Reality:</strong> Reveals which species are most at risk</li>
+                    <li><strong>Family Relationships:</strong> Groups species by their evolutionary families</li>
+                    <li><strong>Geographic Ranges:</strong> Shows where each species naturally occurs</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Species Size and Conservation -->
+        <div class="pure-g">
+            <div class="pure-u-1 pure-u-md-1-2">
+                <div class="viz-section">
+                    <h2>🏆 Species Maximum Sizes vs Conservation Status</h2>
+                    <p style="margin-bottom: 1rem; color: #666; font-size: 0.9rem;">
+                        This chart shows the maximum recorded sizes for each crocodilian species, revealing an interesting pattern: 
+                        some of the largest species are doing well conservation-wise, while many smaller species face greater threats.
+                    </p>
+                    <div style="background: #f8f9fa; padding: 0.8rem; border-radius: 6px; margin-bottom: 1rem; border-left: 3px solid #2c5f2d; font-size: 0.8rem;">
+                        <strong>🔍 Key Patterns:</strong>
+                        <ul style="margin: 0.3rem 0; padding-left: 1.2rem; color: #555;">
+                            <li>Saltwater crocodiles are both largest and least threatened</li>
+                            <li>Many critically endangered species are medium-sized</li>
+                            <li>Size doesn't always predict conservation success</li>
+                        </ul>
+                    </div>
+                    <div id="species-conservation-map" class="chart-container">
+                        <div class="loading">Loading chart...</div>
+                    </div>
+                </div>
+            </div>
+            <div class="pure-u-1 pure-u-md-1-2">
+                <div class="viz-section">
+                    <h2>👨‍👩‍👧‍👦 Species by Family and Conservation</h2>
+                    <p style="margin-bottom: 1rem; color: #666; font-size: 0.9rem;">
+                        This breakdown shows how conservation status varies across the three main crocodilian families: 
+                        Crocodylidae (true crocodiles), Alligatoridae (alligators and caimans), and Gavialidae (gharials).
+                    </p>
+                    <div style="background: #f8f9fa; padding: 0.8rem; border-radius: 6px; margin-bottom: 1rem; border-left: 3px solid #2c5f2d; font-size: 0.8rem;">
+                        <strong>🌿 Family Insights:</strong>
+                        <ul style="margin: 0.3rem 0; padding-left: 1.2rem; color: #555;">
+                            <li>Crocodylidae has the most species diversity</li>
+                            <li>Gavialidae faces the greatest conservation challenges</li>
+                            <li>Alligatoridae shows mixed conservation status</li>
+                        </ul>
+                    </div>
+                    <div id="species-by-family" class="chart-container">
+                        <div class="loading">Loading chart...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Insights Section -->
+        <div class="viz-section">
+            <h2>🔍 Key Insights and Conservation Priorities</h2>
+            <p style="margin-bottom: 1.5rem; color: #666; font-size: 1rem;">
+                By combining field observations with comprehensive species information, we gain unprecedented insights into crocodilian biodiversity. 
+                The dual dataset approach reveals both what we encounter in the wild and what each species is capable of achieving, 
+                providing a complete picture of conservation challenges and opportunities.
+            </p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+                <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e8f5e8 100%); padding: 1.5rem; border-radius: 8px; border-left: 4px solid #2c5f2d;">
+                    <h3 style="color: #2c5f2d; margin-bottom: 0.5rem; font-size: 1.1rem;">🌿 Biodiversity Hotspots</h3>
+                    <p style="font-size: 0.9rem; line-height: 1.5; color: #666; margin-bottom: 0.8rem;">
+                        The data reveals significant concentrations of crocodile observations in tropical regions, 
+                        particularly in Southeast Asia, Africa, and Central America, indicating key biodiversity hotspots.
+                    </p>
+                    <div style="font-size: 0.8rem; color: #555;">
+                        <strong>Key Findings:</strong>
+                        <ul style="margin: 0.3rem 0; padding-left: 1.2rem;">
+                            <li>Southeast Asia shows highest species diversity</li>
+                            <li>Central America maintains strong populations</li>
+                            <li>African regions are critical strongholds</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #f8f9fa 0%, #ffeaea 100%); padding: 1.5rem; border-radius: 8px; border-left: 4px solid #d9534f;">
+                    <h3 style="color: #d9534f; margin-bottom: 0.5rem; font-size: 1.1rem;">⚠️ Conservation Concerns</h3>
+                    <p style="font-size: 0.9rem; line-height: 1.5; color: #666; margin-bottom: 0.8rem;">
+                        Several species show critically endangered status, with habitat loss and human activities 
+                        posing significant threats to crocodile populations worldwide.
+                    </p>
+                    <div style="font-size: 0.8rem; color: #555;">
+                        <strong>Urgent Actions Needed:</strong>
+                        <ul style="margin: 0.3rem 0; padding-left: 1.2rem;">
+                            <li>275 critically endangered observations</li>
+                            <li>Habitat protection is paramount</li>
+                            <li>International cooperation required</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e6f3ff 100%); padding: 1.5rem; border-radius: 8px; border-left: 4px solid #5bc0de;">
+                    <h3 style="color: #5bc0de; margin-bottom: 0.5rem; font-size: 1.1rem;">📊 Size Patterns</h3>
+                    <p style="font-size: 0.9rem; line-height: 1.5; color: #666; margin-bottom: 0.8rem;">
+                        The length-weight relationship varies significantly by habitat type, with larger species 
+                        typically found in more open water environments like rivers and lakes.
+                    </p>
+                    <div style="font-size: 0.8rem; color: #555;">
+                        <strong>Biological Insights:</strong>
+                        <ul style="margin: 0.3rem 0; padding-left: 1.2rem;">
+                            <li>Strong positive correlation (r ≈ 0.95)</li>
+                            <li>Habitat influences growth patterns</li>
+                            <li>Size diversity reflects adaptation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Call to Action -->
+            <div style="background: linear-gradient(135deg, #2c5f2d 0%, #1a3a1b 100%); color: white; padding: 2rem; border-radius: 8px; margin-top: 2rem; text-align: center;">
+                <h3 style="margin-bottom: 1rem; font-size: 1.3rem;">🌍 Conservation Call to Action</h3>
+                <p style="font-size: 1rem; line-height: 1.6; margin-bottom: 1rem; opacity: 0.95;">
+                    The data clearly shows that crocodilian species face significant conservation challenges. 
+                    With over 40% of observations from threatened species, immediate action is needed to protect these magnificent creatures.
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
+                    <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 6px;">
+                        <div style="font-size: 1.5rem; font-weight: bold; margin-bottom: 0.5rem;">275</div>
+                        <div style="font-size: 0.9rem; opacity: 0.9;">Critically Endangered</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 6px;">
+                        <div style="font-size: 1.5rem; font-weight: bold; margin-bottom: 0.5rem;">56</div>
+                        <div style="font-size: 0.9rem; opacity: 0.9;">Endangered Species</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 6px;">
+                        <div style="font-size: 1.5rem; font-weight: bold; margin-bottom: 0.5rem;">170</div>
+                        <div style="font-size: 0.9rem; opacity: 0.9;">Vulnerable Species</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -151,6 +532,22 @@
                 const mapSpec = await fetch('specs/map.json').then(r => r.json());
                 await vegaEmbed('#map', mapSpec, {actions: true});
 
+                // Load length vs weight scatter plot
+                const lengthWeightSpec = await fetch('specs/length-weight.json').then(r => r.json());
+                await vegaEmbed('#length-weight', lengthWeightSpec, {actions: true});
+
+                // Load advanced species analysis
+                const advancedSpeciesSpec = await fetch('specs/advanced-species-analysis.json').then(r => r.json());
+                await vegaEmbed('#advanced-species-analysis', advancedSpeciesSpec, {actions: true});
+
+                // Load habitat distribution chart
+                const habitatSpec = await fetch('specs/habitat-distribution.json').then(r => r.json());
+                await vegaEmbed('#habitat-distribution', habitatSpec, {actions: true});
+
+                // Load age and sex distribution chart
+                const ageSexSpec = await fetch('specs/age-sex-distribution.json').then(r => r.json());
+                await vegaEmbed('#age-sex-distribution', ageSexSpec, {actions: true});
+
                 // Load conservation status chart
                 const conservationSpec = await fetch('specs/conservation.json').then(r => r.json());
                 await vegaEmbed('#conservation', conservationSpec, {actions: true});
@@ -158,11 +555,34 @@
                 // Load species by country chart
                 const speciesCountrySpec = await fetch('specs/species-country.json').then(r => r.json());
                 await vegaEmbed('#species-country', speciesCountrySpec, {actions: true});
+
+                // Load species conservation map
+                const speciesConservationSpec = await fetch('specs/species-conservation-map.json').then(r => r.json());
+                await vegaEmbed('#species-conservation-map', speciesConservationSpec, {actions: true});
+
+                // Load species by family chart
+                const speciesFamilySpec = await fetch('specs/species-by-family.json').then(r => r.json());
+                await vegaEmbed('#species-by-family', speciesFamilySpec, {actions: true});
             } catch (error) {
                 console.error('Error loading visualizations:', error);
                 document.body.innerHTML += '<p style="color: red; padding: 2rem;">Error loading visualizations. Please ensure all JSON files are in the specs folder.</p>';
             }
         }
+
+        // Handle window resize to ensure charts adapt
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+                // Trigger a small delay to allow for smooth resizing
+                const charts = document.querySelectorAll('.vega-embed');
+                charts.forEach(chart => {
+                    if (chart.__vega_view) {
+                        chart.__vega_view.resize();
+                    }
+                });
+            }, 250);
+        });
 
         // Load visualizations when page is ready
         document.addEventListener('DOMContentLoaded', loadVisualizations);

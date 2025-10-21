@@ -1,0 +1,161 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": "container",
+  "title": "Average Size by Species (Length and Weight)",
+  "data": {
+    "url": "crocodile_dataset.csv"
+  },
+  "transform": [
+    {
+      "filter": "datum['Observed Length (m)'] > 0 && datum['Observed Weight (kg)'] > 0"
+    },
+    {
+      "aggregate": [
+        {
+          "op": "mean",
+          "field": "Observed Length (m)",
+          "as": "avg_length"
+        },
+        {
+          "op": "mean",
+          "field": "Observed Weight (kg)",
+          "as": "avg_weight"
+        },
+        {
+          "op": "max",
+          "field": "Observed Length (m)",
+          "as": "max_length"
+        },
+        {
+          "op": "max",
+          "field": "Observed Weight (kg)",
+          "as": "max_weight"
+        },
+        {
+          "op": "count",
+          "as": "observation_count"
+        }
+      ],
+      "groupby": ["Common Name", "Conservation Status"]
+    },
+    {
+      "filter": "datum.observation_count >= 5"
+    },
+    {
+      "sort": [
+        {
+          "field": "avg_length",
+          "order": "descending"
+        }
+      ]
+    },
+    {
+      "window": [
+        {
+          "op": "row_number",
+          "as": "rank"
+        }
+      ],
+      "sort": [
+        {
+          "field": "avg_length",
+          "order": "descending"
+        }
+      ]
+    },
+    {
+      "filter": "datum.rank <= 20"
+    }
+  ],
+  "mark": {
+    "type": "circle",
+    "opacity": 0.8,
+    "stroke": "white",
+    "strokeWidth": 1
+  },
+  "encoding": {
+    "x": {
+      "field": "avg_length",
+      "type": "quantitative",
+      "title": "Average Length (meters)",
+      "scale": {
+        "zero": false
+      }
+    },
+    "y": {
+      "field": "avg_weight",
+      "type": "quantitative",
+      "title": "Average Weight (kg)",
+      "scale": {
+        "zero": false
+      }
+    },
+    "size": {
+      "field": "observation_count",
+      "type": "quantitative",
+      "scale": {
+        "range": [50, 200]
+      },
+      "title": "Number of Observations"
+    },
+    "color": {
+      "field": "Conservation Status",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Least Concern",
+          "Vulnerable",
+          "Endangered",
+          "Critically Endangered",
+          "Data Deficient"
+        ],
+        "range": [
+          "#2c5f2d",
+          "#f0ad4e",
+          "#ff8c00",
+          "#d9534f",
+          "#5bc0de"
+        ]
+      },
+      "title": "Conservation Status"
+    },
+    "tooltip": [
+      {
+        "field": "Common Name",
+        "type": "nominal",
+        "title": "Species"
+      },
+      {
+        "field": "avg_length",
+        "type": "quantitative",
+        "title": "Avg Length (m)"
+      },
+      {
+        "field": "avg_weight",
+        "type": "quantitative",
+        "title": "Avg Weight (kg)"
+      },
+      {
+        "field": "max_length",
+        "type": "quantitative",
+        "title": "Max Length (m)"
+      },
+      {
+        "field": "max_weight",
+        "type": "quantitative",
+        "title": "Max Weight (kg)"
+      },
+      {
+        "field": "observation_count",
+        "type": "quantitative",
+        "title": "Observations"
+      },
+      {
+        "field": "Conservation Status",
+        "type": "nominal",
+        "title": "Conservation Status"
+      }
+    ]
+  }
+}

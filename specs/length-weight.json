@@ -1,0 +1,96 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": "container",
+  "title": "Crocodile Length vs Weight by Habitat Type",
+  "data": {
+    "url": "crocodile_dataset.csv"
+  },
+  "transform": [
+    {
+      "filter": "datum['Observed Length (m)'] > 0 && datum['Observed Weight (kg)'] > 0"
+    }
+  ],
+  "mark": {
+    "type": "circle",
+    "opacity": 0.7,
+    "stroke": "white",
+    "strokeWidth": 1
+  },
+  "encoding": {
+    "x": {
+      "field": "Observed Length (m)",
+      "type": "quantitative",
+      "title": "Length (meters)",
+      "scale": {
+        "zero": false
+      }
+    },
+    "y": {
+      "field": "Observed Weight (kg)",
+      "type": "quantitative",
+      "title": "Weight (kg)",
+      "scale": {
+        "zero": false
+      }
+    },
+    "color": {
+      "field": "Habitat Type",
+      "type": "nominal",
+      "scale": {
+        "scheme": "category20"
+      },
+      "title": "Habitat Type"
+    },
+    "size": {
+      "field": "Age Class",
+      "type": "nominal",
+      "scale": {
+        "range": [50, 200]
+      },
+      "title": "Age Class"
+    },
+    "tooltip": [
+      {
+        "field": "Common Name",
+        "type": "nominal",
+        "title": "Species"
+      },
+      {
+        "field": "Observed Length (m)",
+        "type": "quantitative",
+        "title": "Length (m)"
+      },
+      {
+        "field": "Observed Weight (kg)",
+        "type": "quantitative",
+        "title": "Weight (kg)"
+      },
+      {
+        "field": "Age Class",
+        "type": "nominal",
+        "title": "Age Class"
+      },
+      {
+        "field": "Sex",
+        "type": "nominal",
+        "title": "Sex"
+      },
+      {
+        "field": "Habitat Type",
+        "type": "nominal",
+        "title": "Habitat"
+      },
+      {
+        "field": "Country/Region",
+        "type": "nominal",
+        "title": "Country"
+      },
+      {
+        "field": "Conservation Status",
+        "type": "nominal",
+        "title": "Conservation Status"
+      }
+    ]
+  }
+}
