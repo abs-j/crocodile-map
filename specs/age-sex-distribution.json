@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
-  "height": "container",
-  "title": "Crocodile Observations by Age Class and Sex",
+  "height": 400,
+  "title": "Crocodilian Age-Sex Distribution: Population Pyramid",
   "data": {
     "url": "crocodile_dataset.csv"
   },
@@ -18,48 +18,102 @@
         }
       ],
       "groupby": ["Age Class", "Sex"]
+    },
+    {
+      "calculate": "if(datum['Age Class'] == 'Hatchling', 0, if(datum['Age Class'] == 'Juvenile', 1, if(datum['Age Class'] == 'Subadult', 2, 3)))",
+      "as": "age_order"
+    },
+    {
+      "calculate": "if(datum['Sex'] == 'Male', -datum['count'], datum['count'])",
+      "as": "pyramid_value"
     }
   ],
-  "mark": {
-    "type": "bar",
-    "cornerRadius": 4
-  },
-  "encoding": {
-    "x": {
-      "field": "Age Class",
-      "type": "nominal",
-      "title": "Age Class"
-    },
-    "y": {
-      "field": "count",
-      "type": "quantitative",
-      "title": "Number of Observations"
-    },
-    "color": {
-      "field": "Sex",
-      "type": "nominal",
-      "scale": {
-        "domain": ["Male", "Female"],
-        "range": ["#2c5f2d", "#8B4513"]
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "stroke": "#333",
+        "strokeWidth": 2
       },
-      "title": "Sex"
-    },
-    "tooltip": [
-      {
-        "field": "Age Class",
-        "type": "nominal",
-        "title": "Age Class"
-      },
-      {
-        "field": "Sex",
-        "type": "nominal",
-        "title": "Sex"
-      },
-      {
-        "field": "count",
-        "type": "quantitative",
-        "title": "Observations"
+      "encoding": {
+        "x": {
+          "datum": 0
+        }
       }
-    ]
+    },
+    {
+      "mark": {
+        "type": "bar",
+        "cornerRadius": 4,
+        "stroke": "white",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "x": {
+          "field": "pyramid_value",
+          "type": "quantitative",
+          "title": "Number of Observations",
+          "axis": {
+            "titleFontSize": 14,
+            "labelFontSize": 12,
+            "grid": true,
+            "labelExpr": "abs(datum.value)"
+          },
+          "scale": {
+            "domain": [-200, 200]
+          }
+        },
+        "y": {
+          "field": "Age Class",
+          "type": "nominal",
+          "title": "Age Class",
+          "axis": {
+            "titleFontSize": 14,
+            "labelFontSize": 12
+          },
+          "sort": {
+            "field": "age_order",
+            "order": "ascending"
+          }
+        },
+        "color": {
+          "field": "Sex",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Male", "Female"],
+            "range": ["#8B4513", "#9370DB"]
+          },
+          "title": "Sex",
+          "legend": {
+            "titleFontSize": 14,
+            "labelFontSize": 12,
+            "orient": "top"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "Age Class",
+            "type": "nominal",
+            "title": "Age Class"
+          },
+          {
+            "field": "Sex",
+            "type": "nominal",
+            "title": "Sex"
+          },
+          {
+            "field": "count",
+            "type": "quantitative",
+            "title": "Observations"
+          }
+        ]
+      }
+    }
+  ],
+  "padding": {
+    "top": 50,
+    "bottom": 30,
+    "left": 70,
+    "right": 70
   }
 }

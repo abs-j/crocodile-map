@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": "container",
-  "height": "container",
+  "width": 800,
+  "height": 600,
   "title": "Advanced Crocodilian Analysis: Size, Conservation & Habitat Relationships",
   "data": {
     "url": "crocodile_species_info.csv"
@@ -220,6 +220,21 @@
   "resolve": {
     "scale": {
       "color": "independent"
+    }
+  },
+  "padding": {
+    "top": 60,
+    "bottom": 50,
+    "left": 80,
+    "right": 120
+  },
+  "config": {
+    "view": {
+      "stroke": "transparent"
+    },
+    "axis": {
+      "grid": true,
+      "gridOpacity": 0.1
     }
   }
 }

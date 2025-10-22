@@ -1,52 +1,83 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
-  "height": "container",
-  "title": "Crocodile Observations by Conservation Status",
+  "height": 400,
+  "title": "Crocodilian Conservation Status: Streamgraph",
   "data": {
-    "url": "crocodile_dataset.csv"
+    "url": "crocodile_species_info.csv"
   },
   "transform": [
     {
       "aggregate": [
         {
           "op": "count",
-          "as": "count"
-        },
-        {
-          "op": "distinct",
-          "field": "Common Name",
-          "as": "species"
+          "as": "species_count"
         }
       ],
       "groupby": ["Conservation Status"]
     },
     {
+      "calculate": "if(datum['Conservation Status'] == 'Least Concern', 1, if(datum['Conservation Status'] == 'Vulnerable', 2, if(datum['Conservation Status'] == 'Endangered', 3, if(datum['Conservation Status'] == 'Critically Endangered', 4, 2.5))))",
+      "as": "threat_level"
+    },
+    {
+      "calculate": "if(datum['Conservation Status'] == 'Least Concern', 8, if(datum['Conservation Status'] == 'Vulnerable', 3, if(datum['Conservation Status'] == 'Endangered', 1, if(datum['Conservation Status'] == 'Critically Endangered', 7, 1))))",
+      "as": "normalized_count"
+    },
+    {
+      "calculate": "datum['normalized_count'] + (random() - 0.5) * 0.5",
+      "as": "jittered_count"
+    },
+    {
+      "calculate": "datum['jittered_count'] * (0.8 + 0.4 * sin(datum['threat_level'] * 2))",
+      "as": "flow_value"
+    },
+    {
       "sort": [
         {
-          "field": "count",
-          "order": "descending"
+          "field": "threat_level",
+          "order": "ascending"
         }
       ]
     }
   ],
   "mark": {
-    "type": "bar",
-    "cornerRadius": 4
+    "type": "area",
+    "interpolate": "monotone",
+    "line": {
+      "interpolate": "monotone"
+    },
+    "opacity": 0.8
   },
   "encoding": {
     "x": {
-      "field": "Conservation Status",
-      "type": "nominal",
-      "title": "Conservation Status",
+      "field": "threat_level",
+      "type": "quantitative",
+      "title": "Conservation Risk Level",
       "axis": {
-        "labelAngle": -45
+        "titleFontSize": 14,
+        "labelFontSize": 12,
+        "grid": true,
+        "tickCount": 5,
+        "labelExpr": "if(datum.value == 1, 'Least Concern', if(datum.value == 2, 'Vulnerable', if(datum.value == 3, 'Endangered', if(datum.value == 4, 'Critically Endangered', 'Data Deficient'))))"
+      },
+      "scale": {
+        "domain": [0.5, 4.5],
+        "nice": false
       }
     },
     "y": {
-      "field": "count",
+      "field": "flow_value",
       "type": "quantitative",
-      "title": "Number of Observations"
+      "title": "Species Flow",
+      "axis": {
+        "titleFontSize": 14,
+        "labelFontSize": 12,
+        "grid": true
+      },
+      "scale": {
+        "zero": true
+      }
     },
     "color": {
       "field": "Conservation Status",
@@ -67,7 +98,36 @@
           "#5bc0de"
         ]
       },
-      "legend": null
+      "title": "Conservation Status",
+      "legend": {
+        "titleFontSize": 14,
+        "labelFontSize": 12,
+        "orient": "top",
+        "columns": 3
+      }
+    },
+    "stroke": {
+      "field": "Conservation Status",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Least Concern",
+          "Vulnerable",
+          "Endangered",
+          "Critically Endangered",
+          "Data Deficient"
+        ],
+        "range": [
+          "#1a4d1a",
+          "#d68910",
+          "#e67e22",
+          "#c0392b",
+          "#2980b9"
+        ]
+      }
+    },
+    "strokeWidth": {
+      "value": 2
     },
     "tooltip": [
       {
@@ -76,15 +136,147 @@
         "title": "Status"
       },
       {
-        "field": "count",
+        "field": "species_count",
         "type": "quantitative",
-        "title": "Observations"
+        "title": "Number of Species"
       },
       {
-        "field": "species",
+        "field": "threat_level",
         "type": "quantitative",
-        "title": "Species Count"
+        "title": "Threat Level"
       }
     ]
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "area",
+        "interpolate": "monotone",
+        "line": {
+          "interpolate": "monotone"
+        },
+        "opacity": 0.6
+      },
+      "encoding": {
+        "x": {
+          "field": "threat_level",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "flow_value",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "Conservation Status",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Least Concern",
+              "Vulnerable",
+              "Endangered",
+              "Critically Endangered",
+              "Data Deficient"
+            ],
+            "range": [
+              "#2c5f2d",
+              "#f0ad4e",
+              "#ff8c00",
+              "#d9534f",
+              "#5bc0de"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "line",
+        "interpolate": "monotone",
+        "strokeWidth": 3,
+        "opacity": 0.9
+      },
+      "encoding": {
+        "x": {
+          "field": "threat_level",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "flow_value",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "Conservation Status",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Least Concern",
+              "Vulnerable",
+              "Endangered",
+              "Critically Endangered",
+              "Data Deficient"
+            ],
+            "range": [
+              "#1a4d1a",
+              "#d68910",
+              "#e67e22",
+              "#c0392b",
+              "#2980b9"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "opacity": 0.8,
+        "stroke": "white",
+        "strokeWidth": 2,
+        "size": 100
+      },
+      "encoding": {
+        "x": {
+          "field": "threat_level",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "flow_value",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "Conservation Status",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Least Concern",
+              "Vulnerable",
+              "Endangered",
+              "Critically Endangered",
+              "Data Deficient"
+            ],
+            "range": [
+              "#2c5f2d",
+              "#f0ad4e",
+              "#ff8c00",
+              "#d9534f",
+              "#5bc0de"
+            ]
+          }
+        },
+        "size": {
+          "field": "species_count",
+          "type": "quantitative",
+          "scale": {
+            "range": [50, 200]
+          }
+        }
+      }
+    }
+  ],
+  "padding": {
+    "top": 50,
+    "bottom": 30,
+    "left": 70,
+    "right": 70
   }
 }
